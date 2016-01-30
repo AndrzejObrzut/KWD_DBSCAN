@@ -34,7 +34,7 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
                 visited(neighbor) = true;
                 NeighborsSecond = regionQuery(neighbor, eps);
                 if numel(NeighborsSecond) >= minPts
-                   Neighbors = [Neighbors NeighborsSecond]; 
+                   Neighbors = [Neighbors NeighborsSecond]; %#ok<AGROW>
                 end
             end
             
