@@ -4,24 +4,24 @@ clear;
 iris = load('iris');
 SetOfPoints = iris.data;
 
-eps = 0.5;
-minPts = 10;
+eps = 0.4;
+minPts = 5;
 
 result = dbscan(SetOfPoints, eps, minPts);
 
 max = max(result);
 Colors = hsv(max);
 
-Legends = {};
+Legennda = {};
 for index = 0 : max
     Xi = SetOfPoints(result == index, :);
     if index ~= 0
-        Style = '.';
-        MarkerSize = 12;
+        Style = 'x';
+        MarkerSize = 8;
         Color = Colors(index, :);
         Legends{end+1} = ['Klaster nr' num2str(index)];
     else 
-        Style = 'x';
+        Style = 'o';
         MarkerSize = 6;
         Color = [0 0 0];
         if ~isempty(Xi)
