@@ -28,7 +28,7 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
         result(index) = cluster;
         temp = 1;
         
-        while true
+        for i = 1: Neighbors
             neighbor = Neighbors(temp);
             if visited(neighbor) == false
                 visited(neighbor) = true;
@@ -42,6 +42,6 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
     end
 
     function Neighbors = regionQuery(i)
-        Neighbors = find(Dmatrix(i,:)<=epsilon);
+        Neighbors = find(Dmatrix(i,:)<=eps);
     end
 end
