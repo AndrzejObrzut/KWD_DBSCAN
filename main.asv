@@ -1,0 +1,5 @@
+X = 
+eps = 0.1;
+minPts = 15;
+
+idx = dbscan
