@@ -29,7 +29,7 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
         temp = 1;
         
         while true
-            neighbor = Neighbors(temp); %#ok<FXSET>
+            neighbor = Neighbors(temp); 
             if visited(neighbor) == false
                 visited(neighbor) = true;
                 NeighborsSecond = regionQuery(neighbor, eps);
