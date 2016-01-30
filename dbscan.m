@@ -36,7 +36,10 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
                 if numel(NeighborsSecond) >= minPts
                    Neighbors = [Neighbors NeighborsSecond]; 
                 end
-            end     
+            end
+            if result(neighbor) == 0
+                result(neighbor) = cluster;
+            end
         end
         
     end
