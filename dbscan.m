@@ -8,40 +8,7 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
 
     visited = false(sizeOfCell,1);
     noise = false(sizeOfCell,1);
-    
-% DBSCAN(D, eps, MinPts) {
-%    C = 0
-%    for each point P in dataset D {
-%       if P is visited
-%          continue next point
-%       mark P as visited
-%       NeighborPts = regionQuery(P, eps)
-%       if sizeof(NeighborPts) < MinPts
-%          mark P as NOISE
-%       else {
-%          C = next cluster
-%          expandCluster(P, NeighborPts, C, eps, MinPts)
-%       }
-%    }
-% }
-% 
-% expandCluster(P, NeighborPts, C, eps, MinPts) {
-%    add P to cluster C
-%    for each point P' in NeighborPts { 
-%       if P' is not visited {
-%          mark P' as visited
-%          NeighborPts' = regionQuery(P', eps)
-%          if sizeof(NeighborPts') >= MinPts
-%             NeighborPts = NeighborPts joined with NeighborPts'
-%       }
-%       if P' is not yet member of any cluster
-%          add P' to cluster C
-%    }
-% }
-% 
-% regionQuery(P, eps)
-%    return all points within P's eps-neighborhood (including P)
-    
+ 
     
     for index = 1 : sizeOfCell
         if visited(index) == false
@@ -51,13 +18,18 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
             if numel(Neighbors) < minPts
                 noise(index) = true;
             else
+                claster = claster + 1;
                 %przeszukaæ claster
+                ExpandCluster(SetOfPoints, Neighbors, cluster, eps, minPts)
             end
-            
+              
         end
     end
     
+    function ExpandCluster(SetOfPoints, Neighbors, cluster, eps, minPts)
+    end
+
     function Neighbors = regionQuery(i)
-        Neighbors=find(Dmatrix(i,:)<=epsilon);
+        Neighbors = find(Dmatrix(i,:)<=epsilon);
     end
 end
