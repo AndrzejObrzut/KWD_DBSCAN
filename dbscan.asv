@@ -1,6 +1,6 @@
 function [result, noise] = dbscan(SetOfPoints, eps, minPts) 
 
-    claster = 0;
+    cluster = 0;
     sizeOfCell = size(SetOfPoints,1);
     result = zeros(sizeOfCell,1);
   
@@ -8,56 +8,48 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
 
     visited = false(sizeOfCell,1);
     noise = false(sizeOfCell,1);
-    
-% DBSCAN(D, eps, MinPts) {
-%    C = 0
-%    for each point P in dataset D {
-%       if P is visited
-%          continue next point
-%       mark P as visited
-%       NeighborPts = regionQuery(P, eps)
-%       if sizeof(NeighborPts) < MinPts
-%          mark P as NOISE
-%       else {
-%          C = next cluster
-%          expandCluster(P, NeighborPts, C, eps, MinPts)
-%       }
-%    }
-% }
-% 
-% expandCluster(P, NeighborPts, C, eps, MinPts) {
-%    add P to cluster C
-%    for each point P' in NeighborPts { 
-%       if P' is not visited {
-%          mark P' as visited
-%          NeighborPts' = regionQuery(P', eps)
-%          if sizeof(NeighborPts') >= MinPts
-%             NeighborPts = NeighborPts joined with NeighborPts'
-%       }
-%       if P' is not yet member of any cluster
-%          add P' to cluster C
-%    }
-% }
-% 
-% regionQuery(P, eps)
-%    return all points within P's eps-neighborhood (including P)
-    
+ 
     
     for index = 1 : sizeOfCell
         if visited(index) == false
             visited(index) = true;
             
-            Neighbors = regionQuery(index);
+            Neighbors = regionQuery(index, eps);
             if numel(Neighbors) < minPts
                 noise(index) = true;
             else
-                %przeszukaæ claster
-            end
-            
+                cluster = cluster + 1;
+                ExpandCluster(index, Neighbors, cluster, eps, minPts)
+            end  
         end
     end
     
-    function Neighbors = regionQuery(i)
-        Neighbors = find(Dmatrix(i,:)<=epsilon);
+    function ExpandCluster(index, Neighbors, cluster, eps, minPts)
+        result(index) = cluster;
+        temp = 1;
+        
+        for index' = 1: Neighbors
+            neighbor = Neighbors(temp); %#ok<FXSET>
+            if visited(i) == false
+                visited(i) = true;
+                NeighborsSecond = regionQuery(i, eps);
+                if numel(NeighborsSecond) >= minPts
+                   Neighbors = [Neighbors NeighborsSecond]; %#ok<AGROW>
+                end
+            end
+            
+            if result(i) == 0
+                result(i) = cluster;
+            end
+            
+            temp = temp + 1;
+            if temp > numel(Neighbors)
+                break;
+            end
+        end
+    end
+
+    function Neighbors = regionQuery(i, eps)
+        Neighbors = find(Dmatrix(i,:)<=eps);
     end
 end

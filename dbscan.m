@@ -1,6 +1,6 @@
 function [result, noise] = dbscan(SetOfPoints, eps, minPts) 
 
-    claster = 0;
+    cluster = 0;
     sizeOfCell = size(SetOfPoints,1);
     result = zeros(sizeOfCell,1);
   
@@ -18,7 +18,7 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
             if numel(Neighbors) < minPts
                 noise(index) = true;
             else
-                claster = claster + 1;
+                cluster = cluster + 1;
                 ExpandCluster(index, Neighbors, cluster, eps, minPts)
             end  
         end
@@ -28,8 +28,8 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
         result(index) = cluster;
         temp = 1;
         
-        for i = 1: Neighbors
-            neighbor = Neighbors(temp);
+        while true
+            neighbor = Neighbors(temp); %#ok<FXSET>
             if visited(neighbor) == false
                 visited(neighbor) = true;
                 NeighborsSecond = regionQuery(neighbor, eps);
