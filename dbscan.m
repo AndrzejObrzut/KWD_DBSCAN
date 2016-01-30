@@ -14,7 +14,7 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
         if visited(index) == false
             visited(index) = true;
             
-            Neighbors = regionQuery(index);
+            Neighbors = regionQuery(index, eps);
             if numel(Neighbors) < minPts
                 noise(index) = true;
             else
@@ -32,7 +32,7 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
             neighbor = Neighbors(temp);
             if visited(neighbor) == false
                 visited(neighbor) = true;
-                NeighborsSecond = regionQuery(neighbor);
+                NeighborsSecond = regionQuery(neighbor, eps);
                 if numel(NeighborsSecond) >= minPts
                    Neighbors = [Neighbors NeighborsSecond]; 
                 end
@@ -49,7 +49,7 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
         end
     end
 
-    function Neighbors = regionQuery(i)
+    function Neighbors = regionQuery(i, eps)
         Neighbors = find(Dmatrix(i,:)<=eps);
     end
 end
