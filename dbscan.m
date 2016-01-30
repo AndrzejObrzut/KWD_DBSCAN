@@ -19,12 +19,12 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
                 noise(index) = true;
             else
                 claster = claster + 1;
-                ExpandCluster(SetOfPoints, Neighbors, cluster, eps, minPts)
+                ExpandCluster(index, Neighbors, cluster, eps, minPts)
             end  
         end
     end
     
-    function ExpandCluster(SetOfPoints, Neighbors, cluster, eps, minPts)
+    function ExpandCluster(index, Neighbors, cluster, eps, minPts)
         result(index) = cluster;
         temp = 1;
         
@@ -37,11 +37,16 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
                    Neighbors = [Neighbors NeighborsSecond]; 
                 end
             end
+            
             if result(neighbor) == 0
                 result(neighbor) = cluster;
             end
+            
+            temp = temp + 1;
+            if temp > numel(Neighbors)
+                break;
+            end
         end
-        
     end
 
     function Neighbors = regionQuery(i)
