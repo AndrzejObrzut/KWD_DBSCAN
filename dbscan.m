@@ -1,6 +1,6 @@
 function [result, noise] = dbscan(SetOfPoints, eps, minPts) 
 
-    C = 0;
+    claster = 0;
     sizeOfCell = size(SetOfPoints,1);
     result = zeros(sizeOfCell,1);
   
@@ -47,6 +47,12 @@ function [result, noise] = dbscan(SetOfPoints, eps, minPts)
         if visited(index) == false
             visited(index) = true;
             
+            Neighbors = regionQuery(index);
+            if numel(Neighbors) < minPts
+                noise(index) = true;
+            else
+                %przeszukaæ claster
+            end
             
         end
     end
