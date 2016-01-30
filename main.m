@@ -2,9 +2,9 @@ clc;
 clear;
 
 iris = load('iris');
-x = iris.data;
+SetOfPoints = iris.data;
 
 eps = 0.1;
 minPts = 15;
 
-result = dbscan(x, eps, minPts);
+result = dbscan(SetOfPoints, eps, minPts);
